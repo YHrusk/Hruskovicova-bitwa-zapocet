@@ -1,23 +1,29 @@
 <template>
-  <div class="pt-5">
+  <div class="pt-5" style="padding-left: 280px">
     <div class="card bg-info bg-opacity-10 border-info">
       <div class="row">
+
       <div class="col-xl-3 col-lg-4">
         <img :src="image" alt="" class="card-img img-fluid p-1">
       </div>
+
       <div class="col-xl-9 col-lg-8">
+        <div class="card-title pt-2">
+          <h4>{{ title }}</h4>
+        </div>
+
         <div class="card-body">
-          <h4 class="card-title">{{ title }}</h4>
           <h6>{{author}}</h6>
-          <h6 class="card-subtitle">{{ formattedDate }}</h6>
+          <h6 class="card-subtitle">{{ publicDate }}</h6>
           <p class="card-text text-truncate">{{ info }}</p>
           <div class="opacity-75">
-          <router-link :to="`/book/${id}`" class="btn btn-info">
+          <RouterLink :to="`/book/${id}`" class="btn btn-info">
             View this book
-          </router-link>
+          </RouterLink>
           </div>
         </div>
       </div>
+
       </div>
     </div>
   </div>

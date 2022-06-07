@@ -3,7 +3,7 @@ import HomeView from '../views/HomeView.vue';
 import AboutView from '../views/AboutView.vue';
 import PageNotFound from "../views/PageNotFound.vue";
 import ContactView from "../views/ContactView.vue";
-import Book from "../components/Book.vue";
+import BookView from "../views/BookView.vue";
 import NewBook from "../components/NewBook.vue";
 
 const router = createRouter({
@@ -33,7 +33,7 @@ const router = createRouter({
     {
       path: '/book/:id',
       name: 'book',
-      component: Book,
+      component: BookView,
     },
     {
       path: '/newbook',

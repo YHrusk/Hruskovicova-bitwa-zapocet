@@ -5,7 +5,7 @@ var debug = require('debug')('router:books');
 const options = { verbose: console.debug};
 const database = require('better-sqlite3')('books.sqlite', options);
 
-let books = [
+/*let books = [
     {
         id: 1,
         author: "Eduard Petiška, Zdeněk Miler",
@@ -70,17 +70,23 @@ let books = [
           missions then he is caught in Catch-22: if he flies he is crazy, and doesn't have to; but if he doesn't want to he must be sane and has to.
           That's some catch...`
     },
-];
+];*/
 
 router.get("/", function (req, res, next) {
-    const books = database.prepare('SELECT * FROM books').all();
+    const books = database.prepare('SELECT * FROM book').all();
+    for(let book of books){
+        book.author_ID = database.prepare(`SELECT * FROM author WHERE author.author_ID = ${book.author_ID}`).all();
+        book.publisher_ID = database.prepare(`SELECT * FROM publisher WHERE publisher.publisher_ID = ${book.publisher_ID}`).all();
+    }
     res.send(books);
 });
 
 router.get('/:id', (req, res, next) => {
     const id = req.params.id
     if (id) {
-        const book = database.prepare('SELECT b.title, b.price, b.info, b.publicDate, a.name, p.title FROM books AS b INNER JOIN author AS a ON a.author_ID = b.author_ID AND INNER JOIN publisher AS p ON p.publisher_ID = b.publisher_ID  WHERE ID = ?').get(id);
+        const book = database.prepare('SELECT * FROM book WHERE book_ID = ?').get(id);
+        book.author_ID = database.prepare(`SELECT * FROM author WHERE author.author_ID = ${book.author_ID}`).all();
+        book.publisher_ID = database.prepare(`SELECT * FROM publisher WHERE publisher.publisher_ID = ${book.publisher_ID}`).all();
         res.send(book);
     } else {
         res.send("Not Found");
@@ -94,8 +100,9 @@ router.post("/", (req, res) => {
         price: body.price,
         info: body.info,
         publicDate: new Date().toISOString(),
+        image: body.image
     }
-    const stm = database.prepare('INSERT INTO book () VALUES (?,?,?,?)');
+    const stm = database.prepare('INSERT INTO book (title, price, info, publicDate, image) VALUES (?,?,?,?,?)');
     stm.run(...Object.values(book))
     res.send(book);
 });
@@ -104,12 +111,12 @@ router.patch("/:id", (req, res) => {
     const body = req.body;
     const id = req.params.id;
     if (id) {
-        const book = database.prepare('SELECT * FROM book WHERE ID = ?').get(id);
+        const book = database.prepare('SELECT * FROM book WHERE book_ID = ?').get(id);
         if(book){
             Object.assign(book, body);
             const stm = database.prepare(
-                "UPDATE book SET image = ?, title = ?, date = ?, text = ? WHERE id = ?");
-            stm.run(book.image, book.title,book.publicDate,book.info,parseInt(id));
+                "UPDATE book SET title = ?, price = ?, info = ?, publicDate = ?, image = ? WHERE book_ID = ?");
+            stm.run(book.title, book.price,book.info,book.publicDate,book.image,parseInt(id));
         } else{
             res.sendStatus(404)
         } res.send(book);
@@ -118,10 +125,11 @@ router.patch("/:id", (req, res) => {
     }
 });
 
-router.delete("/id", (req, res) => {
+router.delete("/:id", (req, res) => {
     const id = req.params.id;
+    console.log(id);
     if(id){
-        database.prepare("DELETE FROM book WHERE ID = ?").run(id)
+        database.prepare("DELETE FROM book WHERE book_ID = ?").run(id)
         res.sendStatus(200);
     } else {
         res.sendStatus(400);
