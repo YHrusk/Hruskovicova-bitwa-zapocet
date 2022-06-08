@@ -16,10 +16,20 @@ export default {
       book: []
     }
   },
-  async created() {
-    const res = await fetch(`http://localhost:5000/books/${this.$route.params.id}`,{method: 'GET'});
-    this.book = await res.json();
-    console.log(this.book);
+  async mounted(){
+    const id = this.$route.params.id;
+    this.book = await this.getData(id);
+  },
+  methods: {
+    async getData(id){
+      const res = await fetch(`http://localhost:5000/books/${id}`,
+          {method: 'GET',
+            headers : {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'},}
+      );
+      return res.json();
+    }
   }
 }
 </script>

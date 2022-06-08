@@ -25,7 +25,7 @@
         </div>
       </div>
     </div>
-    <input type="submit" value="Send" class="mt-4">
+    <button type="button" class="btn btn-info" @click="postBook">Save this book</button>
   </div>
 </template>
 
@@ -45,7 +45,23 @@ export default {
   },
   methods: {
     onImage(e){
-
+    },
+    async postBook(){
+      try{
+      console.log(this.book);
+      await fetch('http://localhost:5000/books',
+          {
+            method: 'POST',
+            body: JSON.stringify(this.book),
+            headers:{
+              'Content-type':'application/json'
+            }
+          }
+      )
+        alert("Book was saved!");
+      } catch (e) {
+      alert(e);
+      }
     }
   }
 }

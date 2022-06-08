@@ -70,7 +70,7 @@ export default {
         if(this.bookPatch.info == null) {this.bookPatch.info = this.book.info};
         if(this.bookPatch.publicDate == null) {this.bookPatch.publicDate = this.book.publicDate};
         console.log(this.bookPatch);
-        const res = await  fetch(`http://localhost:5000/books/${bookToPatch}`,
+        const res = await fetch(`http://localhost:5000/books/${bookToPatch}`,
             {methods: 'PATCH',
               body: JSON.stringify(this.bookPatch),
               headers:{
@@ -96,7 +96,7 @@ export default {
       }
     },
     async resetData(){
-      const res = await fetch(`http://localhost:5000/books/${this.$route.params.id}`,{method: 'GET'});
+      const res = await fetch(`http://localhost:5000/books/${id}`,{method: 'GET'});
       this.book = await res.json();
       console.log(this.book);
     }
