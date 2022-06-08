@@ -50,7 +50,20 @@ export default {
   name: "Book",
   data(){
     return {
-      book: [],
+      book: {
+        id: null,
+        title: null,
+        price: null,
+        info: null,
+        publicDate: null,
+        image: null
+      },
+      PatchBook: {
+        title: null,
+        price: null,
+        info: null,
+        publicDate: null
+      },
       editBook: false
     }
   },
@@ -65,14 +78,14 @@ export default {
   methods: {
     async patchTheBook(bookToPatch){
       try{
-        if(this.PatchBook.title == null) {this.PatchBook.title = this.book.title};
-        if(this.PatchBook.price == null) {this.PatchBook.price = this.book.price};
-        if(this.PatchBook.info == null) {this.PatchBook.info = this.book.info};
-        if(this.PatchBook.publicDate == null) {this.PatchBook.publicDate = this.book.publicDate};
-        console.log(this.bookPatch);
+        if(this.PatchBook.title == null) {this.PatchBook.title = bookToPatch.title};
+        if(this.PatchBook.price == null) {this.PatchBook.price = bookToPatch.price};
+        if(this.PatchBook.info == null) {this.PatchBook.info = bookToPatch.info};
+        if(this.PatchBook.publicDate == null) {this.PatchBook.publicDate = bookToPatch.publicDate};
+        console.log(this.PatchBook);
         const res = await fetch(`http://localhost:5000/books/${bookToPatch}`,
             {methods: 'PATCH',
-              body: JSON.stringify(this.bookPatch),
+              body: JSON.stringify(this.PatchBook),
               headers:{
                 'Content-type':'application/json'
               }
@@ -96,7 +109,7 @@ export default {
       }
     },
     async resetData(){
-      const res = await fetch(`http://localhost:5000/books/${id}`,{method: 'GET'});
+      const res = await fetch(`http://localhost:5000/books/${this.$route.params.id}`,{method: 'GET'});
       this.book = await res.json();
       console.log(this.book);
     }

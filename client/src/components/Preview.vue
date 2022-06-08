@@ -13,11 +13,10 @@
         </div>
 
         <div class="card-body">
-          <h6>{{author}}</h6>
           <h6 class="card-subtitle">{{ publicDate }}</h6>
           <p class="card-text text-truncate">{{ info }}</p>
           <div class="opacity-75">
-          <RouterLink :to="`/book/${id}`" class="btn btn-info">
+          <RouterLink :to="`/books/${id}`" class="btn btn-info">
             View this book
           </RouterLink>
           </div>
@@ -36,7 +35,6 @@ export default {
   props: {
     id: Number,
     title: String,
-    author: String,
     publicDate: Date,
     image: String,
     info: String

@@ -31,7 +31,7 @@ const router = createRouter({
       component: ContactView ,
     },
     {
-      path: '/book/:id',
+      path: '/books/:id',
       name: 'book',
       component: BookView,
     },
