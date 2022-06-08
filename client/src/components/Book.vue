@@ -36,7 +36,7 @@
 
             <button v-if="editBook==false" type="button" class="btn btn-info" v-on:click="editBook=true">Edit this book</button>
             <button v-if="editBook==false" type="button" class="btn btn-info" @click="deleteBook(book)">Delete this record of the book</button>
-            <button v-if="editBook==true" class="btn btn-info" type="button" @click="patchBook(book)">Confirm Edit</button>
+            <button v-if="editBook==true" class="btn btn-info" type="button" @click="patchTheBook(book)">Confirm Edit</button>
             <button v-if="editBook==true" class="btn btn-info" type="button" v-on:click="editBook=false">Cancel Edit</button>
           </div>
         </div>
@@ -63,12 +63,12 @@ export default {
     await this.resetData();
   },
   methods: {
-    async patchBook(bookToPatch){
+    async patchTheBook(bookToPatch){
       try{
-        if(this.bookPatch.title == null) {this.bookPatch.title = this.book.title};
-        if(this.bookPatch.price == null) {this.bookPatch.price = this.book.price};
-        if(this.bookPatch.info == null) {this.bookPatch.info = this.book.info};
-        if(this.bookPatch.publicDate == null) {this.bookPatch.publicDate = this.book.publicDate};
+        if(this.PatchBook.title == null) {this.PatchBook.title = this.book.title};
+        if(this.PatchBook.price == null) {this.PatchBook.price = this.book.price};
+        if(this.PatchBook.info == null) {this.PatchBook.info = this.book.info};
+        if(this.PatchBook.publicDate == null) {this.PatchBook.publicDate = this.book.publicDate};
         console.log(this.bookPatch);
         const res = await fetch(`http://localhost:5000/books/${bookToPatch}`,
             {methods: 'PATCH',
