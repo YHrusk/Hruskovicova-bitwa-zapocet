@@ -1,19 +1,27 @@
 <template>
-  <div class="container" style="padding-top: 50px">
+  <div class="container" style="padding-top: 15px">
     <div class="row align-items-start">
       <div class="col">
         <h3 class="content"><b>New book</b></h3>
         <label class="form-label">Book Title:</label>
         <div class="md-form form-group purple-border">
-          <textarea v-model="book.title" class="md-textarea form-control" rows="1" placeholder="title"></textarea><br><br>
+          <textarea v-model="book.title" class="md-textarea form-control" rows="1" placeholder="title"></textarea><br>
+        </div>
+        <label class="form-label">Book Price:</label>
+        <div class="md-form form-group purple-border">
+          <textarea v-model="book.price" class="md-textarea form-control" rows="1" placeholder="price"></textarea><br>
         </div>
         <label class="form-label">Author:</label>
         <div class="md-form form-group purple-border">
-          <textarea v-model="book.author" class="md-textarea form-control" rows="1" placeholder="author"></textarea><br><br>
+          <textarea v-model="book.name" class="md-textarea form-control" rows="1" placeholder="author"></textarea><br>
         </div>
         <label class="form-label">Publication Date:</label>
         <div class="md-form form-group purple-border">
-          <textarea v-model="book.publicDate" class="md-textarea form-control" rows="1" placeholder="publication date"></textarea><br><br>
+          <textarea v-model="book.publicDate" class="md-textarea form-control" rows="1" placeholder="publication date"></textarea><br>
+        </div>
+        <label class="form-label">Publisher:</label>
+        <div class="md-form form-group purple-border">
+          <textarea v-model="book.pubName" class="md-textarea form-control" rows="1" placeholder="publisher"></textarea><br>
         </div>
         <label class="form-label">Information:</label>
         <div class="md-form mb-4 form-group purple-border">
@@ -25,7 +33,7 @@
         </div>
       </div>
     </div>
-    <button type="button" class="btn btn-info" @click="postBook">Save this book</button>
+    <button type="button" class="btn btn-info" @click="postBook" style="margin-top: 25px; margin-bottom: 20px">Save this book</button>
   </div>
 </template>
 
@@ -36,10 +44,12 @@ export default {
     return{
       book: {
         title: null,
-        author: null,
+        price: null,
         publicDate: null,
         info: null,
-        image: null
+        image: null,
+        name: null,
+        pubName: null
       }
     }
   },

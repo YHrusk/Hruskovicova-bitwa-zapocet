@@ -1,9 +1,7 @@
 <template>
-  <div class="row" style="padding-top: 100px">
-    <Book :id="book.book_ID" :title="book.title" :image="book.image" :price="book.price" :info="book.info" :publicDate="book.publicDate"/>
+  <div class="row" style="padding-top: 80px">
     <RouterLink class="btn bg-light text-info m-2" to="/">Back</RouterLink>
-    <h1>{{ book.title }} #{{book.book_ID}}</h1>
-    <h3>{{ book.info }} {{ book.publicDate }} {{ book.image }}</h3>
+    <Book :id="book.book_ID" :title="book.title" :image="book.image" :price="book.price" :info="book.info" :publicDate="book.publicDate"/>
   </div>
 </template>
 
@@ -12,7 +10,7 @@ import Book from "../components/Book.vue";
 
 export default {
   name: "BookView.vue",
-  components: Book,
+  components: {Book},
   data() {
     return{
       book: []

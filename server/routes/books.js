@@ -17,14 +17,8 @@ router.get("/", function (req, res, next) {
 router.get('/:id', (req, res, next) => {
     const id = req.params.id
     if (id) {
-        const book = database.prepare('SELECT * FROM book WHERE book_ID = ?').get(id);
-        /*
-        book.author_ID = database.prepare(`SELECT * FROM author WHERE author.author_ID = ${book.author_ID}`).all();
-        book.publisher_ID = database.prepare(`SELECT * FROM publisher WHERE publisher.publisher_ID = ${book.publisher_ID}`).all();
-        */
+        const book = database.prepare('SELECT b.title, b.price, b.info, b.publicDate, b.image, a.name, p.pubName FROM book AS b JOIN author AS a ON b.author_ID = a.author_ID JOIN publisher AS p ON b.publisher_ID = p.publisher_ID WHERE book_ID = ?').get(id);
         res.send(book);
-        console.log(req);
-        console.log(res);
     } else {
         res.send("Not Found");
     }
@@ -39,9 +33,19 @@ router.post("/", (req, res) => {
         publicDate: new Date().toISOString(),
         image: body.image
     }
-    const stm = database.prepare('INSERT INTO book (title, price, info, publicDate, image) VALUES (?,?,?,?,?)');
-    stm.run(...Object.values(book))
-    res.send(book);
+    const author = {name: body.name}
+    const publisher = {pubName: body.pubName}
+
+    const stmBook = database.prepare('INSERT INTO book (title, price, info, publicDate, image) VALUES (?,?,?,?,?)');
+    stmBook.run(...Object.values(book))
+
+    const stmAuthor = database.prepare('INSERT INTO author name VALES ?');
+    stmAuthor.run(...Object.values(author))
+
+    const stmPublisher = database.prepare('INSERT INTO publisher pubName VALUES ?');
+    stmPublisher.run(...Object.values(publisher))
+
+    res.send({book, author, publisher});
 });
 
 router.patch("/:id", (req, res) => {
