@@ -50,14 +50,7 @@ export default {
   name: "Book",
   data(){
     return {
-      book: {
-        id: null,
-        title: null,
-        price: null,
-        info: null,
-        publicDate: null,
-        image: null
-      },
+      book: [],
       PatchBook: {
         title: null,
         price: null,
