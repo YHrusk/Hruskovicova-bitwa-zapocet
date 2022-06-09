@@ -4,7 +4,8 @@
       <div class="row">
 
       <div class="col-xl-3 col-lg-4">
-        <img :src="image" alt="" class="card-img img-fluid p-1">
+        <img :src="image" alt="" class="card-img img-fluid p-1" v-if="image">
+        <img src="https://www.forewordreviews.com/books/covers/so-good-in-black.jpg" class="card-img img-fluid p-1" v-if="image == null">
       </div>
 
       <div class="col-xl-9 col-lg-8">

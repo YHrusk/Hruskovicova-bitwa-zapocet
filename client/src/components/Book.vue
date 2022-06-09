@@ -4,11 +4,14 @@
       <div class="card-body">
         <div class="row">
           <div class="col-lg-5 col-md-5 col-sm-6">
-            <div class="white-box text-center"><img :src="book.image" class="img-responsive" width="500" height="700"></div>
+            <div class="white-box text-center">
+              <img :src="book.image" class="img-responsive" width="500" height="700" v-if="book.image">
+              <img src="https://www.forewordreviews.com/books/covers/so-good-in-black.jpg" v-if="book.image == null">
+            </div>
           </div>
           <div class="col-lg-7 col-md-7 col-sm-6">
 
-            <h1 v-if="editBook==false" class="box-title mt-5">{{ book.title }}</h1>
+            <h1 v-if="editBook==false" class="box-title mt-5">{{ book.title }}</h1><h1 v-if="editBook==false" class="box-title mt-5">{{ book.id }}</h1>
             <h1 v-if="editBook==true" class="box-title mt-5">Book Title</h1>
             <input v-if="editBook==true" v-model="PatchBook.title" type="text" placeholder="title">
 
@@ -31,13 +34,11 @@
 
             <div v-if="editBook==true">
               <h3 class="box-title mt-3">Edit Key Highlights</h3>
-                <input v-model="PatchBook.name" type="text" placeholder="author">
                 <input v-model="PatchBook.publicDate" type="text" placeholder="publication date" style="margin-left: 10px">
-                <input v-model="PatchBook.pubName" type="text" placeholder="publisher" style="margin-left: 10px">
             </div>
 
             <button v-if="editBook==false" type="button" class="btn btn-info" v-on:click="editBook=true">Edit this book</button>
-            <button v-if="editBook==false" type="button" class="btn btn-info" @click="deleteBook(book)" style="margin-left: 10px">Delete this record of the book</button>
+            <button v-if="editBook==false" type="button" class="btn btn-info" @click="deleteBook()" style="margin-left: 10px">Delete this record of the book</button>
 
             <div style="padding-top:20px">
               <button v-if="editBook==true" class="btn btn-info" type="button" @click="patchTheBook(book)">Confirm Edit</button>
@@ -81,7 +82,7 @@ export default {
         if(this.PatchBook.info == null) {this.PatchBook.info = bookToPatch.info};
         if(this.PatchBook.publicDate == null) {this.PatchBook.publicDate = bookToPatch.publicDate};
         console.log(this.PatchBook);
-        const res = await fetch(`http://localhost:5000/books/${bookToPatch}`,
+        const res = await fetch(`http://localhost:5000/books/${this.$route.params.id}`,
             {method: 'PATCH',
               body: JSON.stringify(this.PatchBook),
               headers:{
@@ -96,9 +97,9 @@ export default {
       this.editBook=false;
       await this.resetData();
     },
-    async deleteBook(bookToDelete){
+    async deleteBook(){
       try{
-        const res = await fetch(`http://localhost:5000/books/${bookToDelete}`,{method: 'DELETE'});
+        const res = await fetch(`http://localhost:5000/books/${this.$route.params.id}`,{method: 'DELETE'});
         console.log(res);
         alert("Book was successfully deleted");
       } catch(e){

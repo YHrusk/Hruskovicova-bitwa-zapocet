@@ -30,23 +30,43 @@ router.post("/", (req, res) => {
         title: body.title,
         price: body.price,
         info: body.info,
-        publicDate: new Date().toISOString(),
-        image: body.image
+        publicDate: body.publicDate,
+        image: body.image,
+        author_ID: 7,
+        publisher_ID: 7
     }
-    const author = {name: body.name}
-    const publisher = {pubName: body.pubName}
 
-    const stmBook = database.prepare('INSERT INTO book (title, price, info, publicDate, image) VALUES (?,?,?,?,?)');
+    const stmBook = database.prepare('INSERT INTO book (title, price, info, publicDate, image, author_ID, publisher_ID) VALUES (?,?,?,?,?,?,?)');
     stmBook.run(...Object.values(book))
 
-    const stmAuthor = database.prepare('INSERT INTO author name VALES ?');
-    stmAuthor.run(...Object.values(author))
-
-    const stmPublisher = database.prepare('INSERT INTO publisher pubName VALUES ?');
-    stmPublisher.run(...Object.values(publisher))
-
-    res.send({book, author, publisher});
+    res.send(book);
 });
+
+/*
+router.post("/author", (req, res) => {
+    const body = req.body;
+    const author ={
+        name: body.name
+    }
+
+    const stmAuthor = database.prepare('INSERT INTO author (name) VALUES (?)');
+    stmAuthor.run(author.name);
+
+    res.send(author);
+});
+
+router.post("/publisher", (req, res) => {
+    const body = req.body;
+    const publisher ={
+        pubName: body.pubName
+    }
+
+    const stmPublisher = database.prepare('INSERT INTO publisher (pubName) VALUES (?)');
+    stmPublisher.run(publisher.pubName)
+
+    res.send(publisher);
+});
+ */
 
 router.patch("/:id", (req, res) => {
     const body = req.body;

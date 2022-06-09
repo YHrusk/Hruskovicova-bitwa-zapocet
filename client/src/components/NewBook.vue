@@ -11,18 +11,22 @@
         <div class="md-form form-group purple-border">
           <textarea v-model="book.price" class="md-textarea form-control" rows="1" placeholder="price"></textarea><br>
         </div>
+        <!--
         <label class="form-label">Author:</label>
         <div class="md-form form-group purple-border">
-          <textarea v-model="book.name" class="md-textarea form-control" rows="1" placeholder="author"></textarea><br>
+          <textarea v-model="author.name" class="md-textarea form-control" rows="1" placeholder="author"></textarea><br>
         </div>
+        -->
         <label class="form-label">Publication Date:</label>
         <div class="md-form form-group purple-border">
           <textarea v-model="book.publicDate" class="md-textarea form-control" rows="1" placeholder="publication date"></textarea><br>
         </div>
+        <!--
         <label class="form-label">Publisher:</label>
         <div class="md-form form-group purple-border">
-          <textarea v-model="book.pubName" class="md-textarea form-control" rows="1" placeholder="publisher"></textarea><br>
+          <textarea v-model="publisher.pubName" class="md-textarea form-control" rows="1" placeholder="publisher"></textarea><br>
         </div>
+        -->
         <label class="form-label">Information:</label>
         <div class="md-form mb-4 form-group purple-border">
           <textarea v-model="book.info" class="md-textarea form-control" rows="3" placeholder="info"></textarea>
@@ -33,7 +37,7 @@
         </div>
       </div>
     </div>
-    <button type="button" class="btn btn-info" @click="postBook" style="margin-top: 25px; margin-bottom: 20px">Save this book</button>
+    <button type="button" class="btn btn-info" @click="postBook()" style="margin-top: 25px; margin-bottom: 20px">Save this book</button>
   </div>
 </template>
 
@@ -48,9 +52,13 @@ export default {
         publicDate: null,
         info: null,
         image: null,
-        name: null,
+      }/*,
+      author: {
+        name: null
+      },
+      publisher: {
         pubName: null
-      }
+      } */
     }
   },
   methods: {
@@ -72,7 +80,42 @@ export default {
       } catch (e) {
       alert(e);
       }
+    }/*,
+    async postAuthor(){
+      try{
+        console.log(this.author);
+        await fetch('http://localhost:5000/books',
+            {
+              method: 'POST',
+              body: JSON.stringify(this.author),
+              headers:{
+                'Content-type':'application/json'
+              }
+            }
+        )
+        alert("Author was saved!");
+      } catch (e) {
+        alert(e);
+      }
+    },
+    async postPublisher(){
+      try{
+        console.log(this.publisher);
+        await fetch('http://localhost:5000/books',
+            {
+              method: 'POST',
+              body: JSON.stringify(this.publisher),
+              headers:{
+                'Content-type':'application/json'
+              }
+            }
+        )
+        alert("Publisher was saved!");
+      } catch (e) {
+        alert(e);
+      }
     }
+    */
   }
 }
 </script>
