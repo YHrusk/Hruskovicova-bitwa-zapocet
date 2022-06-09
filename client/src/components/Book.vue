@@ -21,7 +21,7 @@
 
             <p v-if="editBook==false">{{book.info}}</p>
             <h3 v-if="editBook==true">Book Info</h3>
-            <textarea v-if="editBook==true" v-model="PatchBook.info" type="text" placeholder="info"/>
+            <textarea v-if="editBook==true" v-model="PatchBook.info" type="text" placeholder="info" rows="4" cols="50"/>
 
             <div v-if="editBook==false">
               <h3 class="box-title mt-5">Key Highlights</h3>
@@ -34,7 +34,7 @@
 
             <div v-if="editBook==true">
               <h3 class="box-title mt-3">Edit Key Highlights</h3>
-                <input v-model="PatchBook.publicDate" type="text" placeholder="publication date" style="margin-left: 10px">
+                <input v-model="PatchBook.publicDate" type="text" placeholder="publication date">
             </div>
 
             <button v-if="editBook==false" type="button" class="btn btn-info" v-on:click="editBook=true">Edit this book</button>

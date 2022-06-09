@@ -76,8 +76,8 @@ router.patch("/:id", (req, res) => {
         if(book){
             Object.assign(book, body);
             const stm = database.prepare(
-                "UPDATE book SET title = ?, price = ?, info = ?, publicDate = ?, image = ? WHERE book_ID = ?");
-            stm.run(book.title, book.price,book.info,book.publicDate,book.image,parseInt(id));
+                "UPDATE book SET title = ?, price = ?, info = ?, publicDate = ? WHERE book_ID = ?");
+            stm.run(book.title, book.price,book.info,book.publicDate,parseInt(id));
         } else{
             res.sendStatus(404)
         } res.send(book);
